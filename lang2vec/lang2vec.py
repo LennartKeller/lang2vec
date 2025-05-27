@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 from __future__ import unicode_literals
+from pathlib import Path
 
 import json, itertools, os, sys
 import numpy as np
@@ -17,8 +18,10 @@ Author: Antonis Anastasopoulos
 Original Author: Patrick Littell
 Last modified: March 25, 2019
 '''
+HERE = Path(__file__).parent.resolve()
+# LETTER_CODES_FILE = pkg_resources.resource_filename(__name__, "data/letter_codes.json")
+LETTER_CODES = HERE / "data" / "letter_codes.json"
 
-LETTER_CODES_FILE = pkg_resources.resource_filename(__name__, "data/letter_codes.json")
 FEATURE_SETS_DICT = {
     
     "syntax_wals" : ( "features.npz", "WALS", "S_" ),
