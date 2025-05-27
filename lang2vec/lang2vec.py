@@ -20,7 +20,7 @@ Last modified: March 25, 2019
 '''
 HERE = Path(__file__).parent.resolve()
 # LETTER_CODES_FILE = pkg_resources.resource_filename(__name__, "data/letter_codes.json")
-LETTER_CODES = HERE / "data" / "letter_codes.json"
+LETTER_CODES_FILE = HERE / "data" / "letter_codes.json"
 
 FEATURE_SETS_DICT = {
     
