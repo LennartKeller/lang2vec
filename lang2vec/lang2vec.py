@@ -19,8 +19,8 @@ Original Author: Patrick Littell
 Last modified: March 25, 2019
 '''
 HERE = Path(__file__).parent.resolve()
-# LETTER_CODES_FILE = pkg_resources.resource_filename(__name__, "data/letter_codes.json")
-LETTER_CODES_FILE = HERE / "data" / "letter_codes.json"
+LETTER_CODES_FILE = pkg_resources.resource_filename(__name__, "data/letter_codes.json")
+# LETTER_CODES_FILE = HERE / "data" / "letter_codes.json"
 
 FEATURE_SETS_DICT = {
     
@@ -157,7 +157,7 @@ def get_id_set(lang_codes):
 def get_learned_set(lang_codes):
     filename = "learned.npy"
     filename = pkg_resources.resource_filename(__name__, os.path.join('data', filename))
-    feature_database = np.load(filename, encoding="latin1").item()
+    feature_database = np.load(filename, encoding="latin1", allow_pickle=True).item()
     lang_codes = [ get_learned_language_code(l, feature_database) for l in lang_codes ]
     feature_names = [ "LEARNED_%03d" % i for i in range(512) ]
     feature_values = np.ones((len(lang_codes),512))*(-1)
