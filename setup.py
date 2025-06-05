@@ -19,7 +19,6 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/antonisa/lang2vec",
     install_requires=install_requires,
-    scripts=['lang2vec/lang2vec.py'],
     packages=['lang2vec'],
     package_dir={'lang2vec': 'lang2vec'},
     package_data={'lang2vec': ['data/*.npz', 'data/*.json', 'data/distances2.zip', 'data/learned.npy', 'data/distances_languages.txt']},
