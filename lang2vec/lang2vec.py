@@ -4,9 +4,8 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from pathlib import Path
 
-import json, itertools, os, sys
+import json, itertools, sys
 import numpy as np
-import pkg_resources
 from zipfile import ZipFile as zf
 import urllib.request
 import scipy.sparse as sparse
@@ -19,8 +18,8 @@ Original Author: Patrick Littell
 Last modified: March 25, 2019
 '''
 HERE = Path(__file__).parent.resolve()
-LETTER_CODES_FILE = pkg_resources.resource_filename(__name__, "data/letter_codes.json")
-# LETTER_CODES_FILE = HERE / "data" / "letter_codes.json"
+# LETTER_CODES_FILE = pkg_resources.resource_filename(__name__, "data/letter_codes.json")
+LETTER_CODES_FILE = HERE / "data" / "letter_codes.json"
 
 FEATURE_SETS_DICT = {
     
@@ -49,8 +48,8 @@ FEATURE_SETS_DICT = {
     "learned" : ( "learned.npy", "learned", "LEARNED_")
     
 }
-DISTANCES_FILE = pkg_resources.resource_filename(__name__, "data/distances2.zip")
-DISTANCES_LANGUAGE_FILE = pkg_resources.resource_filename(__name__, "data/distances_languages.txt")
+DISTANCES_FILE = HERE / "data" / "distances2.zip"
+DISTANCES_LANGUAGE_FILE = HERE / "data" / "distances_languages.txt"
 
 with open(LETTER_CODES_FILE, 'r') as letter_file:
     LETTER_CODES = json.load(letter_file)
@@ -62,7 +61,7 @@ def available_uriel_languages():
     #for feature_set in FEATURE_SETS_DICT:
     for feature_set in ["fam"]:
         filename, source, prefix = FEATURE_SETS_DICT[feature_set]
-        filename = pkg_resources.resource_filename(__name__, os.path.join('data', filename))
+        filename = HERE / "data" / filename
         feature_database = np.load(filename)
         mask = np.all(feature_database["data"] != -1.0, axis=0)
         langs = [feature_database["langs"][i] for i,m in enumerate(mask) if np.sum(m)>0]
@@ -143,7 +142,7 @@ def get_feature_index(feature_name, feature_database):
 def get_id_set(lang_codes):
     #feature_database = np.load("family_features.npz")
     filename = "family_features.npz"
-    filename = pkg_resources.resource_filename(__name__, os.path.join('data', filename))
+    filename = HERE / "data" / filename
     feature_database = np.load(filename)
     lang_codes = [ get_language_code(l, feature_database) for l in lang_codes ]
     all_languages = list(feature_database["langs"])
@@ -156,7 +155,7 @@ def get_id_set(lang_codes):
 
 def get_learned_set(lang_codes):
     filename = "learned.npy"
-    filename = pkg_resources.resource_filename(__name__, os.path.join('data', filename))
+    filename = HERE / "data" / filename
     feature_database = np.load(filename, encoding="latin1", allow_pickle=True).item()
     lang_codes = [ get_learned_language_code(l, feature_database) for l in lang_codes ]
     feature_names = [ "LEARNED_%03d" % i for i in range(512) ]
@@ -180,7 +179,7 @@ def get_named_set(lang_codes, feature_set):
             " lang2vec.available_feature_sets() to see the available feature sets.")
         
     filename, source, prefix = FEATURE_SETS_DICT[feature_set]
-    filename = pkg_resources.resource_filename(__name__, os.path.join('data', filename))
+    filename = HERE / "data" / filename
     feature_database = np.load(filename)
     lang_codes = [ get_language_code(l, feature_database) for l in lang_codes ]
     lang_indices = [ get_language_index(l, feature_database) for l in lang_codes ]
